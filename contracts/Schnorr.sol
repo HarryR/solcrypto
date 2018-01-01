@@ -2,6 +2,7 @@ pragma solidity ^0.4.14;
 
 import {altbn128 as Curve} from "./altbn128.sol";
 
+// https://en.wikipedia.org/wiki/Proof_of_knowledge#Schnorr_protocol
 library Schnorr
 {
     // Costs ~85000 gas, 2x ecmul, + mulmod, addmod, hash etc. overheads
