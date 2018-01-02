@@ -2,6 +2,10 @@ import sys
 import binascii
 from sha3 import keccak_256
 
+quote = lambda x: '"' + str(x) + '"'
+quotemany = lambda *x: ','.join(map(quote, x))
+quotelist = lambda x: '[' + quotemany(*x) + ']'
+
 safe_ord = ord if sys.version_info.major == 2 else lambda x: x if isinstance(x, int) else ord(x)
 
 bytes_to_int = lambda x: reduce(lambda o, b: (o << 8) + safe_ord(b), [0] + list(x))

@@ -2,6 +2,7 @@ from __future__ import print_function
 
 from .curve import *
 from .schnorr import *
+from .utils import *
 
 """
 This implements AOS 1-out-of-n ring signature which require only `n+1`
@@ -64,6 +65,8 @@ def ring_sign(pkeys, mypair, tees=None, alpha=None, message=None):
 
 
 def ring_check(pkeys, tees, seed, message=None):
+	assert len(pkeys) > 0
+	assert len(tees) == len(pkeys)
 	message = message or hashpn(*pkeys)
 	c = seed
 	for i, pkey in enumerate(pkeys):
@@ -73,4 +76,9 @@ def ring_check(pkeys, tees, seed, message=None):
 
 if __name__ == "__main__":
 	msg = randsn()
-	print(ring_check(*ring_sign(*ring_randkeys(4), message=msg), message=msg))
+	keys = ring_randkeys(4)
+
+	print(ring_check(*ring_sign(*keys, message=msg), message=msg))
+
+	proof = ring_sign(*keys, message=msg)
+	print(quotelist([item.n for sublist in proof[0] for item in sublist]) + ',' + quotelist(proof[1]) + ',' + quote(proof[2]) + ',' + quote(msg))
