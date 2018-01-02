@@ -1,20 +1,28 @@
 from __future__ import print_function
 
-from .secp256k1 import *
+from .altbn128 import *
+
+
+_hash_points_and_message = lambda a, b, m: hashsn(hashpn(a, b), m)
 
 
 def schnorr_create(secret, message):
+	assert isinstance(secret, long)
+	assert isinstance(message, long)
 	xG = sbmul(secret)
 	k = hashsn(message, secret)
 	kG = sbmul(k)
-	e = hashsn(hashpn(xG, kG), message)
+	e = hashs(xG[0].n, xG[1].n, kG[0].n, kG[1].n, message)
 	s = submodn(k, mulmodn(secret, e))
 	return xG, s, e, message
 
 
 def schnorr_calc(xG, s, e, message):
+	assert isinstance(s, long)
+	assert isinstance(e, long)
+	assert isinstance(message, long)
 	kG = add(sbmul(s), multiply(xG, e))
-	return hashsn(hashpn(xG, kG), message)
+	return hashs(xG[0].n, xG[1].n, kG[0].n, kG[1].n, message)
 
 
 def schnorr_verify(xG, s, e, message):
@@ -22,4 +30,9 @@ def schnorr_verify(xG, s, e, message):
 
 
 if __name__ == "__main__":
-	print(schnorr_verify(*schnorr_create(randsn(), randsn())))
+	s = 19977808579986318922850133509558564821349392755821541651519240729619349670944
+	m = 19996069338995852671689530047675557654938145690856663988250996769054266469975
+	proof = schnorr_create(s, m)
+	assert proof[1] == 9937528682437333073292374920792423444152291976168124823244260606973530841357
+	assert proof[2] == 62556699762868942562895201798238094653401696340984411017785245503967199042244
+	print(schnorr_verify(*proof))

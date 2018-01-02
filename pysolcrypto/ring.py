@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-from .secp256k1 import *
+from .altbn128 import *
 from .schnorr import *
 
 """
@@ -21,6 +21,11 @@ of the previous link is used as the next value of `c`.
 
 The ring is successfully verified if the last value of `c` matches the
 seed value.
+
+For more information on turning this scheme into a linkable ring:
+
+ - https://bitcointalk.org/index.php?topic=972541.msg10619684#msg10619684
+ - https://eprint.iacr.org/2004/027.pdf
 """
 
 
@@ -32,6 +37,7 @@ def ring_randkeys(n=4):
 
 
 def ring_sign(pkeys, mypair, tees=None, alpha=None, message=None):
+	assert len(pkeys) > 0
 	message = message or hashpn(*pkeys)
 	mypk, mysk = mypair
 	myidx = pkeys.index(mypk)
@@ -50,6 +56,7 @@ def ring_sign(pkeys, mypair, tees=None, alpha=None, message=None):
 		i += 1
 
 	# Then close the ring, which proves we know the secret for one ring item
+	# TODO: split into schnorr_alter
 	alpha_gap = submodn(alpha, cees[myidx-1])
 	tees[myidx] = addmodn(tees[myidx], mulmodn(mysk, alpha_gap))
 
