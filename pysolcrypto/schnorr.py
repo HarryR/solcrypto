@@ -12,11 +12,13 @@ def schnorr_create(secret, message):
 	return xG, s, e, message
 
 
+def schnorr_calc(xG, s, e, message):
+	kG = add(sbmul(s), multiply(xG, e))
+	return hashsn(hashpn(xG, kG), message)
+
+
 def schnorr_verify(xG, s, e, message):
-	sG = sbmul(s)
-	kG = add(sG, multiply(xG, e))
-	check_e = hashsn(hashpn(xG, kG), message)
-	return e == check_e
+	return e == schnorr_calc(xG, s, e, message)
 
 
 if __name__ == "__main__":

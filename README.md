@@ -7,3 +7,4 @@ This repository contains Solidity and Python implementations of several cryptogr
  * [Borromean Ring Signatures: Gregory Maxwell, Andrew Poelstra](https://github.com/Blockstream/borromean_paper)
  * [One-Time, Zero-Sum Ring Signature: Conner Fromknech](https://scalingbitcoin.org/papers/one-time-zero-sum-ring-signature-conner-fromknecht-2015.pdf)
  * [1-out-of-n Signatures from a Variety of Keys: Masayuki Abe, Miyako Ohkubo and Koutarou Suzuki](https://www.iacr.org/cryptodb/archive/2002/ASIACRYPT/50/50.pdf)
+ * [One-out-of-Many Proofs: Jens Groth and Markulf Kohlweiss](http://discovery.ucl.ac.uk/1502142/1/Groth_764.pdf)
