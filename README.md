@@ -1,6 +1,18 @@
 # SolCrypto
 
-This repository contains Solidity and Python implementations of several cryptographic primitives.
+This repository contains Solidity and Python implementations of several cryptographic primitives, they are designed to work together and make it easier to build novel cryptosystems using composable primitives. These implementations can be easily switched to either the secp256k1 or alt_bn128 curves.
+
+## Algorithms
+
+ * Schnorr proof of knowledge, [Schnorr.sol](contracts/Schnorr.sol), [schnorr.py](pysolcrypto/schnorr.py)
+ * AOS ring signatures, [AOSRing.sol](contracts/AOSRing.sol), [ring.py](pysolcrypto/ring.py)
+
+## TODO
+
+ * Linkable AOS ring
+ * Pedersen commitments
+ * Security hardening
+ * Documentation
 
 ## White Papers
 
