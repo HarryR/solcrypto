@@ -1,15 +1,13 @@
 import sys
 from random import randint
-from sha3 import keccak_256
 from py_ecc import bn128
 from py_ecc.bn128 import add, multiply, curve_order, G1
 from py_ecc.bn128.bn128_field_elements import inv
 
-from .utils import bytes_to_int, tobe256
+from .utils import hashs
 
 randsn = lambda: randint(1, curve_order - 1)
 sbmul = lambda s: multiply(G1, s)
-hashs = lambda *x: bytes_to_int(keccak_256(''.join(map(tobe256, x))).digest())
 hashsn = lambda *x: hashs(*x) % curve_order
 hashpn = lambda *x: hashsn(*[item.n for sublist in x for item in sublist])
 addmodn = lambda x, y: (x + y) % curve_order

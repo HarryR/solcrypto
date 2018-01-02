@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-from .altbn128 import *
+from .curve import *
 from .schnorr import *
 
 """

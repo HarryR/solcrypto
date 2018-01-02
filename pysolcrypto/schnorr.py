@@ -1,15 +1,15 @@
 from __future__ import print_function
 
-from .altbn128 import *
+from .curve import *
 
 
 _hash_points_and_message = lambda a, b, m: hashsn(hashpn(a, b), m)
 
 
-def schnorr_create(secret, message):
+def schnorr_create(secret, message, point=None):
 	assert isinstance(secret, long)
 	assert isinstance(message, long)
-	xG = sbmul(secret)
+	xG = multiply(point, secret) if point else sbmul(secret)
 	k = hashsn(message, secret)
 	kG = sbmul(k)
 	e = hashs(xG[0].n, xG[1].n, kG[0].n, kG[1].n, message)
@@ -17,11 +17,12 @@ def schnorr_create(secret, message):
 	return xG, s, e, message
 
 
-def schnorr_calc(xG, s, e, message):
+def schnorr_calc(xG, s, e, message, point=None):
 	assert isinstance(s, long)
 	assert isinstance(e, long)
 	assert isinstance(message, long)
-	kG = add(sbmul(s), multiply(xG, e))
+	sG = multiply(point, secret) if point else sbmul(s)
+	kG = add(sG, multiply(xG, e))
 	return hashs(xG[0].n, xG[1].n, kG[0].n, kG[1].n, message)
 
 
