@@ -24,9 +24,6 @@ def unpack_signature(r, sv):
 		sv = sv ^ (1 << 255)
 	else:
 		v = 27
-	print("v", v)
-	print("r", r)
-	print("s", sv)
 	return v, r, sv
 
 
