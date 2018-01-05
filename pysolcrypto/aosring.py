@@ -30,14 +30,14 @@ For more information on turning this scheme into a linkable ring:
 """
 
 
-def ring_randkeys(n=4):
+def aosring_randkeys(n=4):
 	skeys = [randsn() for _ in range(0, n)]
 	pkeys = [sbmul(sk) for sk in skeys]
 	i = randint(0, n-1)
 	return pkeys, (pkeys[i], skeys[i])
 
 
-def ring_sign(pkeys, mypair, tees=None, alpha=None, message=None):
+def aosring_sign(pkeys, mypair, tees=None, alpha=None, message=None):
 	assert len(pkeys) > 0
 	message = message or hashpn(*pkeys)
 	mypk, mysk = mypair
@@ -64,7 +64,7 @@ def ring_sign(pkeys, mypair, tees=None, alpha=None, message=None):
 	return pkeys, tees, cees[-1]
 
 
-def ring_check(pkeys, tees, seed, message=None):
+def aosring_check(pkeys, tees, seed, message=None):
 	assert len(pkeys) > 0
 	assert len(tees) == len(pkeys)
 	message = message or hashpn(*pkeys)
@@ -76,9 +76,9 @@ def ring_check(pkeys, tees, seed, message=None):
 
 if __name__ == "__main__":
 	msg = randsn()
-	keys = ring_randkeys(4)
+	keys = aosring_randkeys(4)
 
-	print(ring_check(*ring_sign(*keys, message=msg), message=msg))
+	print(aosring_check(*aosring_sign(*keys, message=msg), message=msg))
 
-	proof = ring_sign(*keys, message=msg)
+	proof = aosring_sign(*keys, message=msg)
 	print(quotelist([item.n for sublist in proof[0] for item in sublist]) + ',' + quotelist(proof[1]) + ',' + quote(proof[2]) + ',' + quote(msg))
