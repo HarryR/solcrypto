@@ -6,6 +6,7 @@ This repository contains Solidity and Python implementations of several cryptogr
 
  * Schnorr proof of knowledge, [Schnorr.sol](contracts/Schnorr.sol), [schnorr.py](pysolcrypto/schnorr.py)
  * AOS ring signatures, [AOSRing.sol](contracts/AOSRing.sol), [ring.py](pysolcrypto/ring.py)
+ * Packed ECDSA signatures (2x 256bit words, no `v`), [ECDSA.sol](contracts/ECDSA.sol), [ecdsa.py](pysolcrypto/ecdsa.py)
 
 ## TODO
 
