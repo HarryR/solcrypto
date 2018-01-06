@@ -1,5 +1,6 @@
 import sys
 import binascii
+import math
 from os import urandom
 from sha3 import keccak_256
 

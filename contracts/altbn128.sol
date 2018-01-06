@@ -51,14 +51,14 @@ library altbn128 {
 		return G1Point(1, 2);
 	}
 
-	function HashToPoint(bytes32 s)
+	function HashToPoint(uint256 s)
         internal constant returns (G1Point)
     {
         uint256 beta = 0;
         uint256 y = 0;
 
         // XXX: Gen Order (n) or Field Order (p) ?
-        uint256 x = uint256(s) % GEN_ORDER;
+        uint256 x = s % GEN_ORDER;
 
         while( true ) {
             (beta, y) = FindYforX(x);

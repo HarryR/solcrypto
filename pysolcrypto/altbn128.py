@@ -3,7 +3,7 @@ import math
 from random import randint
 from py_ecc import bn128
 from py_ecc.bn128 import add, multiply, curve_order, G1
-from py_ecc.bn128.bn128_field_elements import inv, field_modulus
+from py_ecc.bn128.bn128_field_elements import inv, field_modulus, FQ
 
 from .utils import hashs, bytes_to_int, powmod
 
@@ -11,6 +11,7 @@ randsn = lambda: randint(1, curve_order - 1)
 sbmul = lambda s: multiply(G1, s)
 hashsn = lambda *x: hashs(*x) % curve_order
 hashpn = lambda *x: hashsn(*[item.n for sublist in x for item in sublist])
+hashp = lambda *x: hashs(*[item.n for sublist in x for item in sublist])
 addmodn = lambda x, y: (x + y) % curve_order
 addmodp = lambda x, y: (x + y) % field_modulus
 mulmodn = lambda x, y: (x * y) % curve_order
@@ -27,14 +28,20 @@ def evalcurve(x):
 	return (beta, y)
 
 
+def isoncurve(x, y):
+	beta = addmodp(mulmodp(mulmodp(x, x), x), 3)
+	return beta == mulmodp(y, y)
+
+
 def hashtopoint(x):
 	assert isinstance(x, long)
 	x = x % curve_order
 	while True:
 		beta, y = evalcurve(x)
 		if beta == mulmodp(y, y):
-			return x, y
-		x = addmodp(x, 1)
+			assert isoncurve(x, y)
+			return FQ(x), FQ(y)
+		x = addmodn(x, 1)
 
 
 if __name__ == "__main__":
