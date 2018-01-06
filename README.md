@@ -11,7 +11,6 @@ This repository contains Solidity and Python implementations of several cryptogr
 
 ## TODO
 
- * Linkable AOS ring
  * Pedersen commitments
  * Security hardening
  * Documentation
