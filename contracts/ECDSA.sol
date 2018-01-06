@@ -1,7 +1,12 @@
 pragma solidity ^0.4.19;
 
 
-library ECDSA {
+library ECDSA
+{
+    /**
+    * This unpacks the 'v' parameter from the upper bit of 's' which means
+    * a signature can be packed into two 256bit words.
+    */
     function recover( bytes32 hash, uint256 r, uint256 sv )
         internal pure
         returns (address)

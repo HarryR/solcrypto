@@ -70,7 +70,7 @@ def aosring_check(pkeys, tees, seed, message=None):
 	message = message or hashpn(*pkeys)
 	c = seed
 	for i, pkey in enumerate(pkeys):
-		c = schnorr_calc(pkey, tees[i], c or seed, message)
+		c = schnorr_calc(pkey, tees[i], c, message)
 	return c == seed
 
 

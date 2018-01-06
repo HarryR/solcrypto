@@ -21,7 +21,7 @@ def schnorr_calc(xG, s, e, message, point=None):
 	assert isinstance(s, long)
 	assert isinstance(e, long)
 	assert isinstance(message, long)
-	sG = multiply(point, secret) if point else sbmul(s)
+	sG = multiply(point, s) if point else sbmul(s)
 	kG = add(sG, multiply(xG, e))
 	return hashs(xG[0].n, xG[1].n, kG[0].n, kG[1].n, message)
 

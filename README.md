@@ -4,9 +4,9 @@ This repository contains Solidity and Python implementations of several cryptogr
 
 ## Algorithms
 
- * Schnorr proof of knowledge, [Schnorr.sol](contracts/Schnorr.sol), [schnorr.py](pysolcrypto/schnorr.py)
- * AOS ring signatures, [AOSRing.sol](contracts/AOSRing.sol), [ring.py](pysolcrypto/ring.py)
- * Packed ECDSA signatures (2x 256bit words, no `v`), [ECDSA.sol](contracts/ECDSA.sol), [ecdsa.py](pysolcrypto/ecdsa.py)
+ * Schnorr proof of knowledge: [Schnorr.sol](contracts/Schnorr.sol), [schnorr.py](pysolcrypto/schnorr.py)
+ * AOS ring signatures: [AOSRing.sol](contracts/AOSRing.sol), [aosring.py](pysolcrypto/aosring.py)
+ * Packed ECDSA signatures (2x 256bit words, no `v`): [ECDSA.sol](contracts/ECDSA.sol), [ecdsa.py](pysolcrypto/ecdsa.py)
 
 ## TODO
 
@@ -17,6 +17,8 @@ This repository contains Solidity and Python implementations of several cryptogr
 
 ## White Papers
 
+ * [How to Leak a Secret](https://people.csail.mit.edu/rivest/pubs/RST01.pdf)
+ * [Linkable Spontaneous Anonymous Group Signature for Ad Hoc Groups](https://eprint.iacr.org/2004/027.pdf)
  * [Borromean Ring Signatures: Gregory Maxwell, Andrew Poelstra](https://github.com/Blockstream/borromean_paper)
  * [One-Time, Zero-Sum Ring Signature: Conner Fromknech](https://scalingbitcoin.org/papers/one-time-zero-sum-ring-signature-conner-fromknecht-2015.pdf)
  * [1-out-of-n Signatures from a Variety of Keys: Masayuki Abe, Miyako Ohkubo and Koutarou Suzuki](https://www.iacr.org/cryptodb/archive/2002/ASIACRYPT/50/50.pdf)

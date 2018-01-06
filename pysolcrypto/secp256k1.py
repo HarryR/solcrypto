@@ -3,7 +3,7 @@ from random import randint
 from py_ecc.secp256k1.secp256k1 import add, multiply, inv, N, P, G
 from .utils import hashs
 
-assert False == "Do not use, use altbn128"
+#assert False == "Do not use, use altbn128"
 
 safe_ord = ord if sys.version_info.major == 2 else lambda x: x if isinstance(x, int) else ord(x)
 bytes_to_int = lambda x: reduce(lambda o, b: (o << 8) + safe_ord(b), [0] + list(x))

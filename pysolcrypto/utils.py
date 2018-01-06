@@ -28,3 +28,16 @@ tobe256 = lambda v: zpad(int_to_big_endian(v), 32)
 hashs = lambda *x: bytes_to_int(keccak_256(''.join(map(tobe256, x))).digest())
 
 randb256 = lambda: urandom(32)
+
+def powmod(a,b,n):
+    c = 0
+    f = 1
+    k = int(math.log(b, 2))
+    while k >= 0:
+        c *= 2
+        f = (f*f)%n
+        if b & (1 << k):
+            c += 1
+            f = (f*a) % n
+        k -= 1
+    return f
