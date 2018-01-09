@@ -30,6 +30,14 @@ hashs = lambda *x: bytes_to_int(keccak_256(''.join(map(tobe256, x))).digest())
 
 randb256 = lambda: urandom(32)
 
+
+bit_clear = lambda n, b: n ^ (1<<(b-1)) if n & 1<<(b-1) else n
+
+bit_set = lambda n, b: n | (1<<(b-1))
+
+bit_test = lambda n, b: 0 != (n & (1<<(b-1)))
+
+
 def powmod(a,b,n):
     c = 0
     f = 1
@@ -42,3 +50,9 @@ def powmod(a,b,n):
             f = (f*a) % n
         k -= 1
     return f
+
+
+if __name__ == "__main__":
+    assert bin(bit_clear(3, 1)) == '0b10'
+    assert bin(bit_clear(3, 2)) == '0b1'
+    assert bin(bit_set(0, 1)) == '0b1'

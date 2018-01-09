@@ -45,8 +45,6 @@ def uaosring_sign(pkeys, mypair, tees=None, alpha=None, message=None):
 		b = add(multiply(M, t), multiply(T, c))
 		cees[i] = hashs(h, hashp(T, a, b))
 
-	# Then close the ring, which proves we know the secret for one ring item
-	# TODO: split into schnorr_alter
 	alpha_gap = submodn(alpha, cees[myidx-1])
 	tees[myidx] = addmodn(tees[myidx], mulmodn(mysk, alpha_gap))
 

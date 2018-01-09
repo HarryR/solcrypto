@@ -1,1 +1,3 @@
 *.pyc
+package-log.json
+/node_modules
