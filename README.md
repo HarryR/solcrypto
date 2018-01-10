@@ -8,6 +8,7 @@ This repository contains Solidity and Python implementations of several cryptogr
  * AOS ring signatures: [AOSRing.sol](contracts/AOSRing.sol), [aosring.py](pysolcrypto/aosring.py)
  * Linkable AOS ring signatures: [UAOSRing.sol](contracts/UAOSRing.sol), [uaosring.py](pysolcrypto/uaosring.py)
  * Packed ECDSA signatures (2x 256bit words, no `v`): [ECDSA.sol](contracts/ECDSA.sol), [ecdsa.py](pysolcrypto/ecdsa.py)
+ * Merkle tree: [MerkleProof.sol](contracts/MerkleProof.sol), [merkle.py](pysolcrypto/merkle.py)
 
 ## TODO
 
