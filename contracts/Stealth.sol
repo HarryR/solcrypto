@@ -1,6 +1,6 @@
 pragma solidity ^0.4.19;
 
-import {altbn128 as Curve} from "./altbn128.sol";
+import "./Curve.sol"
 
 // https://gist.github.com/ryanxcharles/1c0f95d0892b4a92d70a
 // http://www.nicolascourtois.com/bitcoin/paycoin_privacy_monero_6_ICISSP17.pdf

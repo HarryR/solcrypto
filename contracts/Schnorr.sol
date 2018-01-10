@@ -1,6 +1,6 @@
 pragma solidity ^0.4.14;
 
-import {altbn128 as Curve} from "./altbn128.sol";
+import "./Curve.sol"
 
 // https://en.wikipedia.org/wiki/Proof_of_knowledge#Schnorr_protocol
 library Schnorr

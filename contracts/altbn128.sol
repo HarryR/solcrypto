@@ -9,7 +9,7 @@
 
 pragma solidity ^0.4.14;
 
-library altbn128 {
+library Curve {
    	// p = p(u) = 36u^4 + 36u^3 + 24u^2 + 6u + 1
     uint256 internal constant FIELD_ORDER = 0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd47;
 

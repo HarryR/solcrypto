@@ -1,6 +1,6 @@
 pragma solidity ^0.4.14;
 
-import {altbn128 as Curve} from "./altbn128.sol";
+import "./Curve.sol";
 
 // https://eprint.iacr.org/2004/027.pdf
 library UAOSRing
