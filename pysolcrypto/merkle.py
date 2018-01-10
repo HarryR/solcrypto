@@ -1,12 +1,5 @@
 #!/usr/bin/env python
-import random
-
-from .utils import hashs, bit_clear, bit_set, bit_test, tobe256
-
-
-merkle_hash = lambda *x: bit_clear(hashs(*x), 255)
-
-
+from __future__ import print_function
 """
 This merkle tree implementation uses a balanced binary tree, for example a 
 tree containing 5 leafs has 3 nodes and 1 root.
@@ -51,6 +44,12 @@ the ordering property of the hash function by sacrificing a bit.
 The 'balanced' terminology here may be different from the common understanding
 of balanced, here it means that every node always has 2 children. 
 """
+
+import random
+
+from .utils import hashs, bit_clear, bit_set, bit_test, tobe256
+
+merkle_hash = lambda *x: bit_clear(hashs(*x), 256)
 
 
 def merkle_tree(items):
@@ -104,7 +103,7 @@ def merkle_path(item, tree):
 		idx = level.index(item)
 		even = 0 == idx % 2
 		if even:
-			path.append(bit_set(level[idx+1], 255))
+			path.append(bit_set(level[idx+1], 256))
 			item = merkle_hash(item, level[idx+1])
 		else:
 			path.append(level[idx-1])
@@ -118,14 +117,16 @@ def merkle_proof(leaf, path, root):
 	"""
 	node = merkle_hash(leaf)
 	for item in path:
-		if bit_test(item, 255):
-			node = merkle_hash(node, bit_clear(item, 255))
+		if bit_test(item, 256):
+			item = bit_clear(item, 256)
+			node = merkle_hash(node, item)
 		else:
 			node = merkle_hash(item, node)
 	return node == root
 
 
 if __name__ == "__main__":
+	
 	for i in range(1, 100):
 		items = range(0, i)
 		tree, root = merkle_tree(items)
@@ -133,9 +134,15 @@ if __name__ == "__main__":
 		for item in items:
 			proof = merkle_path(item, tree)
 			assert True == merkle_proof(item, proof, root)
-
-	print ','.join([
+	
+	items = [hashs(n) for n in range(0, 10)]
+	tree, root = merkle_tree(items)
+	item = items[3]
+	proof = merkle_path(item, tree)
+	merkle_proof(item, proof, root)
+	print("")
+	print(','.join([
 		'"0x' + tobe256(root).encode('hex') + '"',
 		'"0x' + tobe256(merkle_hash(item)).encode('hex') + '"',
 		'[' + ','.join(['"0x' + tobe256(x).encode("hex") + '"' for x in proof]) + ']'
-	])
+	]))
