@@ -43,6 +43,13 @@ the ordering property of the hash function by sacrificing a bit.
 
 The 'balanced' terminology here may be different from the common understanding
 of balanced, here it means that every node always has 2 children. 
+
+Interesting references:
+
+ - https://en.wikipedia.org/wiki/K-ary_tree
+ - http://www.jaist.ac.jp/~mizuhito/papers/conference/CADE05.pdf
+ - http://ijns.jalaxy.com.tw/contents/ijns-v3-n1/ijns-2006-v3-n1-p65-72.pdf
+ - https://kylelemons.net/download/Complex_Data_Structures_N-ary_Tree_PDF.pdf
 """
 
 import random
@@ -53,9 +60,7 @@ merkle_hash = lambda *x: bit_clear(hashs(*x), 256)
 
 
 def merkle_tree(items):
-	"""
-	Given an array of items, build a merkle tree
-	"""
+	# Given an array of items, build a merkle tree
 	assert len(items) > 0
 	level = map(merkle_hash, items)
 
@@ -99,16 +104,15 @@ def merkle_path(item, tree):
 		if item not in level:
 			continue
 		if len(level) == 1:
+			assert tree[-1][0] == item
 			return path
 		idx = level.index(item)
-		even = 0 == idx % 2
-		if even:
+		if 0 == idx % 2:
 			path.append(bit_set(level[idx+1], 256))
 			item = merkle_hash(item, level[idx+1])
 		else:
 			path.append(level[idx-1])
 			item = merkle_hash(level[idx-1], item)
-	return path
 
 
 def merkle_proof(leaf, path, root):
@@ -135,11 +139,19 @@ if __name__ == "__main__":
 			proof = merkle_path(item, tree)
 			assert True == merkle_proof(item, proof, root)
 	
+	# Test items, 0..9
 	items = [hashs(n) for n in range(0, 10)]
 	tree, root = merkle_tree(items)
 	item = items[3]
 	proof = merkle_path(item, tree)
 	merkle_proof(item, proof, root)
+
+	# Expected output test case
+	assert root == 0x1a792cf089bfa56eae57ffe87e9b22f9c9bfe52c1ac300ea1f43f4ab53b4b794
+	assert merkle_hash(item) == 0x2584db4a68aa8b172f70bc04e2e74541617c003374de6eb4b295e823e5beab01
+	assert proof[0] == 0x1ab0c6948a275349ae45a06aad66a8bd65ac18074615d53676c09b67809099e0
+	assert proof[3] == 0xcb431dd627bc8dcfd858eae9304dc71a8d3f34a8de783c093188bb598eeafd04
+
 	print("")
 	print(','.join([
 		'"0x' + tobe256(root).encode('hex') + '"',

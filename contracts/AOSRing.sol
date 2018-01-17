@@ -1,5 +1,6 @@
 pragma solidity ^0.4.14;
 
+import "./Curve.sol";
 import "./Schnorr.sol";
 
 // https://www.iacr.org/cryptodb/archive/2002/ASIACRYPT/50/50.pdf

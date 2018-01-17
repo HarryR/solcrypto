@@ -1,6 +1,6 @@
 pragma solidity ^0.4.14;
 
-import "./Curve.sol"
+import "./Curve.sol";
 
 // https://en.wikipedia.org/wiki/Proof_of_knowledge#Schnorr_protocol
 library Schnorr

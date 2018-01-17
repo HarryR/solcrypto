@@ -5,6 +5,7 @@ import "./Curve.sol";
 // https://eprint.iacr.org/2004/027.pdf
 library UAOSRing
 {
+	using Curve for Curve.G1Point;
 	function RingLink( Curve.G1Point Y, Curve.G1Point M, Curve.G1Point tagpoint, uint256 s, uint256 c )
 		internal constant
 		returns (uint256)

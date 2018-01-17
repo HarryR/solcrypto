@@ -28,15 +28,13 @@ def pack_signature(v, r, s):
 
 
 def unpack_signature(r, sv):
-	r = bytes_to_int(r)
 	sv = bytes_to_int(sv)
-	v = (sv & (1 << 255))
-	if v:
+	if (sv & (1 << 255)):
 		v = 28
 		sv = sv ^ (1 << 255)
 	else:
 		v = 27
-	return v, r, sv
+	return v, bytes_to_int(r), sv
 
 
 def pubkey_to_ethaddr(pubkey):
