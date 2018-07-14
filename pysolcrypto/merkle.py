@@ -46,8 +46,9 @@ of balanced, here it means that every node always has 2 children.
 from __future__ import print_function
 import random
 
+from sha3 import keccak_256
+
 from .utils import zpad, int_to_big_endian, bit_clear, bit_test, bit_set, bytes_to_int
-from .crypto import keccak_256
 
 def serialize(v):
     if isinstance(v, str):
