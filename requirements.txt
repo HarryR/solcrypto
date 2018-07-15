@@ -1,2 +1,3 @@
 py_ecc
 pysha3
+bitcoin

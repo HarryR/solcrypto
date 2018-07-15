@@ -6,3 +6,5 @@ yarn.lock
 solc-static-linux
 .coverage
 .coverage.*
+lextab.py
+yacctab.py

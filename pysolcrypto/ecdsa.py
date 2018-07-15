@@ -39,7 +39,7 @@ def pubkey_to_ethaddr(pubkey):
 	return utils.sha3(pubkey[1:])[12:].encode('hex')
 
 
-def sign(messageHash, key):
+def sign(messageHash, seckey):
 	return pack_signature(*b.ecdsa_raw_sign(messageHash, seckey))
 
 
@@ -48,20 +48,23 @@ def recover(messageHash, r, sv):
 
 
 if __name__ == "__main__":
-	while True:
+	# Verifies that a random sample of freshly generated keys don't
+	# end up setting the 'flag' bit which replaces 'v'
+	# If this test ever fails, the entire premise of this thing is fucked!
+	for _ in range(0, 10):
+		print("Generating key")
 		messageHash = randb256()
 		seckey = randb256()
 		pubkey = pubkey_to_ethaddr(b.privtopub(seckey))
 
+		print("Signing")
 		sig_t = b.ecdsa_raw_sign(messageHash, seckey)
 		sig = sign(messageHash, seckey)
 		assert unpack_signature(*sig) == sig_t
 
+		print("Recovering")
 		pubkey_v = recover(messageHash, *sig)
-		"""print("Pubkey:", pubkey_v, pubkey)
+		print("Pubkey:", pubkey_v, pubkey)
 		print("Message:", messageHash.encode('hex'))
-		print("Sig:", sig[0].encode('hex'), sig[1].encode('hex'))"""
+		print("Sig:", sig[0].encode('hex'), sig[1].encode('hex'))
 		assert pubkey == pubkey_v
-
-
-
