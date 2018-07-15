@@ -7,4 +7,5 @@ install:
 script:
  - make
  - make test
+after_success:
  - make coverage-combine coverage-report

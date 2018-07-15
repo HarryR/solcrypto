@@ -44,7 +44,7 @@ flatten: build $(SOLJITSU)
 $(SOLJITSU): node_modules
 
 clean:
-	rm -rf build
+	rm -rf build .coverage .coverage.*
 	find . -name '*.pyc' -exec rm '{}' ';'
 	find . -name '__pycache__' -exec rm '{}' ';'
 
