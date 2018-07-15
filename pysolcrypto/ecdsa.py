@@ -1,6 +1,9 @@
 from __future__ import print_function
-from ethereum import utils
+
+from binascii import hexlify
+
 import bitcoin as b
+from sha3 import keccak_256
 
 from .utils import tobe256, bytes_to_int, randb256
 
@@ -36,7 +39,7 @@ def pubkey_to_ethaddr(pubkey):
 	if isinstance(pubkey, tuple):
 		assert len(pubkey) == 2
 		pubkey = b.encode_pubkey(pubkey, 'bin')
-	return utils.sha3(pubkey[1:])[12:].encode('hex')
+	return hexlify(keccak_256(pubkey[1:]).digest()[12:])
 
 
 def sign(messageHash, seckey):
@@ -51,7 +54,7 @@ if __name__ == "__main__":
 	# Verifies that a random sample of freshly generated keys don't
 	# end up setting the 'flag' bit which replaces 'v'
 	# If this test ever fails, the entire premise of this thing is fucked!
-	for _ in range(0, 10):
+	while True:
 		print("Generating key")
 		messageHash = randb256()
 		seckey = randb256()

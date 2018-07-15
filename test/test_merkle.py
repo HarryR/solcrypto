@@ -7,7 +7,7 @@ from pysolcrypto.merkle import merkle_tree, merkle_path, merkle_proof
 class MerkleTests(unittest.TestCase):
     def test_merkle(self):
         for i in range(1, 100):
-            items = range(0, i)
+            items = list(range(0, i))
             tree, root = merkle_tree(items)
             random.shuffle(items)
             for item in items:
