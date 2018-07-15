@@ -1,0 +1,1 @@
+[{"constant":true,"inputs":[{"name":"pubkeys","type":"uint256[]"},{"name":"tees","type":"uint256[]"},{"name":"seed","type":"uint256"},{"name":"message","type":"uint256"}],"name":"Verify","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}]
