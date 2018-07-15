@@ -1,6 +1,7 @@
 import sys
 import binascii
 import math
+from functools import reduce
 from os import urandom
 from sha3 import keccak_256
 
@@ -26,7 +27,7 @@ zpad = lambda x, l: b'\x00' * max(0, l - len(x)) + x
 
 tobe256 = lambda v: zpad(int_to_big_endian(v), 32)
 
-hashs = lambda *x: bytes_to_int(keccak_256(''.join(map(tobe256, x))).digest())
+hashs = lambda *x: bytes_to_int(keccak_256(b''.join(map(tobe256, x))).digest())
 
 randb256 = lambda: urandom(32)
 

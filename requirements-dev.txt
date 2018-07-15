@@ -1,0 +1,6 @@
+coverage
+coveralls
+pylint
+vulture
+pyflakes
+flake8

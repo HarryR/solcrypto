@@ -1,5 +1,7 @@
 # SolCrypto
 
+[![Build Status](https://travis-ci.org/HarryR/solcrypto.svg?branch=master)](https://travis-ci.org/HarryR/solcrypto)
+
 This repository contains Solidity and Python implementations of several cryptographic primitives, they are designed to work together and make it easier to build novel cryptosystems using composable primitives. These implementations can be easily switched to either the secp256k1 or alt_bn128 curves.
 
 ## Algorithms

@@ -1,0 +1,11 @@
+language: python
+python:
+ - '2.7'
+ - '3.6'
+install:
+ - make solc-static-linux node_modules requirements requirements-dev
+script:
+ - make
+ - make test
+after_success:
+ - make coverage-combine coverage-report

@@ -1,13 +1,8 @@
 from __future__ import print_function
-import math
-import os
-from collections import defaultdict
-from base64 import b64decode
-from binascii import unhexlify, hexlify
 from ethereum import utils
 import bitcoin as b
 
-from .utils import *
+from .utils import tobe256, bytes_to_int, randb256
 
 
 def pack_signature(v, r, s):
