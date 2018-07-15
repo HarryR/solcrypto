@@ -1,4 +1,6 @@
 from random import randint
+from past.builtins import long
+
 from py_ecc import bn128
 from py_ecc.bn128 import add, multiply, curve_order, G1
 from py_ecc.bn128.bn128_field_elements import inv, field_modulus, FQ

@@ -45,6 +45,7 @@ of balanced, here it means that every node always has 2 children.
 """
 from __future__ import print_function
 import random
+from past.builtins import long
 
 from sha3 import keccak_256
 
@@ -58,13 +59,13 @@ def serialize(v):
     raise NotImplementedError(v)
 
 
-hashs = lambda *x: bytes_to_int(keccak_256(''.join(map(serialize, x))).digest())
+hashs = lambda *x: bytes_to_int(keccak_256(b''.join(map(serialize, x))).digest())
 
 merkle_hash = lambda *x: bit_clear(hashs(*x), 255)
 
 
 def merkle_tree(items):
-    tree = [map(merkle_hash, items)]
+    tree = [[merkle_hash(_) for _ in items]]
     extra = merkle_hash(0)
     while True:
         level = tree[-1]
