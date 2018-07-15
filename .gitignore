@@ -4,3 +4,5 @@ yarn.lock
 /node_modules
 /build
 solc-static-linux
+.coverage
+.coverage.*

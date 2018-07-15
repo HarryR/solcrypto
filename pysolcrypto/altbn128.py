@@ -1,5 +1,3 @@
-import sys
-import math
 from random import randint
 from py_ecc import bn128
 from py_ecc.bn128 import add, multiply, curve_order, G1
