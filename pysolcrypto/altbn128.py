@@ -7,9 +7,11 @@ from py_ecc.bn128.bn128_field_elements import inv, field_modulus, FQ
 
 from .utils import hashs, bytes_to_int, powmod
 
+asint = lambda x: x.n if isinstance(x, FQ) else x
+
 randsn = lambda: randint(1, curve_order - 1)
 randsp = lambda: randint(1, field_modulus - 1)
-sbmul = lambda s: multiply(G1, s)
+sbmul = lambda s: multiply(G1, asint(s))
 hashsn = lambda *x: hashs(*x) % curve_order
 hashpn = lambda *x: hashsn(*[item.n for sublist in x for item in sublist])
 hashp = lambda *x: hashs(*[item.n for sublist in x for item in sublist])

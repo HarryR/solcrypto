@@ -1,6 +1,6 @@
 from py_ecc.bn128 import pairing, G2, G1
 
-from .altbn128 import hashsn, mulmodp, invmodn, multiply
+from .altbn128 import randsn, addmodn, hashsn, mulmodp, invmodn, multiply
 
 """
 Bare-essentials implementation taken from the following papers:
@@ -17,7 +17,7 @@ XXX: this doesn't fully and faithfully implement the papers
 """
 
 
-def accumulate(items_list):
+def accumulate(items_list, secret):
     """
     Given a set of items, create an aggregate point on G1 which
     contains the hashes of all items.
@@ -28,14 +28,14 @@ def accumulate(items_list):
     """
     x0_mul_to_xn = 1
     for item in items_list:
-        xi = hashsn(item)
+        xi = addmodn(hashsn(item), secret)
         x0_mul_to_xn = mulmodp(x0_mul_to_xn, xi)
 
     AkX = multiply(G1, x0_mul_to_xn)
     return AkX
 
 
-def witness(AkX, my_item):
+def witness(AkX, my_item, secret):
     """
     Create a witness as:
 
@@ -44,11 +44,11 @@ def witness(AkX, my_item):
     @param AkX: G1 point accumulator
     @param my_item: Your item
     """
-    x = hashsn(my_item)
+    x = addmodn(hashsn(my_item), secret)
     return multiply(AkX, invmodn(x))
 
 
-def ismember(AkX, my_item, W_x):
+def ismember(AkX, my_item, W_x, secret):
     """
     Verify membership by pairing equality
 
@@ -58,15 +58,16 @@ def ismember(AkX, my_item, W_x):
     @param my_item: Your item
     @param W_x: G1 point witness
     """
-    x = hashsn(my_item)
+    x = addmodn(hashsn(my_item), secret)
     e1 = pairing(G2, AkX)
     e2 = pairing(multiply(G2, x), W_x)
     return e1 == e2
 
 
 if __name__ == "__main__":
+    secret = randsn()
     items = list(range(1, 10))
     my_item = items[3]
-    AkX = accumulate(items)
-    W_x = witness(AkX, my_item)
-    assert True == ismember(AkX, my_item, W_x)
+    AkX = accumulate(items, secret)
+    W_x = witness(AkX, my_item, secret)
+    assert True == ismember(AkX, my_item, W_x, secret)
