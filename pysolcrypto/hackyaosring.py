@@ -34,7 +34,7 @@ the Schnorr signature verifications.
 
 def hacky_schnorr_calc(xG, s, e, message, point=None):
 	kG = hackymul(xG[0], xG[1], e, m=(((N - s) % N) * xG[0]) % N)
-	return hashs(xG[0], xG[1], kG[0], message)
+	return hashs(xG[0], xG[1], bytes_to_int(kG), message)
 
 
 def haosring_randkeys(n=4):
