@@ -6,7 +6,7 @@ from pysolcrypto.altbn128 import randsn
 
 class AccumulatorTests(unittest.TestCase):
     def test_witness(self):
-    	secret = randsn()
+        secret = randsn()
         items = list(range(1, 10))
         my_item = items[3]
         AkX = accumulate(items, secret)
