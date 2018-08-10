@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+from binascii import unhexlify
 from .secp256k1 import *
 from .utils import *
 
@@ -32,9 +33,9 @@ the Schnorr signature verifications.
 """
 
 
-def hacky_schnorr_calc(xG, s, e, message, point=None):
+def hacky_schnorr_calc(xG, s, e, message):
 	kG = hackymul(xG[0], xG[1], e, m=(((N - s) % N) * xG[0]) % N)
-	return hashs(xG[0], xG[1], bytes_to_int(kG), message)
+	return hashs(xG[0], xG[1], bytes_to_int(unhexlify(kG)), message)
 
 
 def haosring_randkeys(n=4):
@@ -85,7 +86,6 @@ if __name__ == "__main__":
 	msg = randsn()
 	keys = haosring_randkeys(4)
 
-	print(haosring_check(*haosring_sign(*keys, message=msg), message=msg))
-
 	proof = haosring_sign(*keys, message=msg)
+	print(haosring_check(*proof, message=msg))
 	print(quotelist([item for sublist in proof[0] for item in sublist]) + ',' + quotelist(proof[1]) + ',' + quote(proof[2]) + ',' + quote(msg))
