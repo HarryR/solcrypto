@@ -56,9 +56,13 @@ library Pederson {
      * @param      r     Random value
      * @return           pedersen commitment
      */
-    function commitWithH(uint256 H, uint256 m, uint256 r) returns(uint256[2]) internal {
+    function commitWithH(uint256[2] H, uint256 m, uint256 r) returns(uint256[2]) internal {
         // Generate left point r * H
-        Curve.G1Point lf = Curve.g1mul(H, r);
+        Curve.G1Point H_point = G1Point({
+            X: H[0],
+            Y: H[1],
+        });
+        Curve.G1Point lf = Curve.g1mul(H_point, r);
 
         // Generate right point m * G
         Curve.G1Point rt = Curve.g1mul(G1.P1(), m);
@@ -70,14 +74,14 @@ library Pederson {
     }
     
     /**
-     * @dev        Verify a pederson commitment by reconstructing commitment
+     * @dev        Verify a pederson commitment by reconstructing commitment using an unsafe method (h should be hidden)
      * @param      commitment  The commitment
      * @param      m           Message committed to
      * @param      h           Input to HashToPoint
      * @param      r           Random value
      * @return     res         Success or failure
      */
-    function verify (uint256[2] commitment, uint256 m, uint256 h, uint256 r) returns(bool res) internal {
+    function verifyUnsafe(uint256[2] commitment, uint256 m, uint256 h, uint256 r) returns(bool res) internal {
         // Use random point initially to generate 2nd generator H
         Curve.G1Point H = Curve.HashToPoint(h);
 
@@ -125,9 +129,13 @@ library Pederson {
      * @param      H           Random generator
      * @return     res         Success or failure
      */
-    function verifyWithH(uint256[2] commitment, uint256 m, uint256 r, uint256 H) returns(bool) internal {
+    function verifyWithH(uint256[2] commitment, uint256 m, uint256 r, uint256[2] H) returns(bool) internal {
         // Generate left point r * H
-        Curve.G1Point lf = Curve.g1mul(H, r);
+        Curve.G1Point H_point = G1Point({
+            X: H[0],
+            Y: H[1],
+        });
+        Curve.G1Point lf = Curve.g1mul(H_point, r);
 
         // Generate right point m * g
         Curve.G1Point rt = Curve.g1mul(G1.P1(), m);
