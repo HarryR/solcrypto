@@ -11,7 +11,7 @@ def schnorr_create(secret, message, point=None):
 	assert isinstance(message, long)
 	xG = multiply(point, secret) if point else sbmul(secret)
 	k = hashsn(message, secret)
-	kG = sbmul(k)
+	kG = multiply(point, k) if point else sbmul(k)
 	e = hashs(xG[0].n, xG[1].n, kG[0].n, kG[1].n, message)
 	s = submodn(k, mulmodn(secret, e))
 	return xG, s, e, message
@@ -26,8 +26,8 @@ def schnorr_calc(xG, s, e, message, point=None):
 	return hashs(xG[0].n, xG[1].n, kG[0].n, kG[1].n, message)
 
 
-def schnorr_verify(xG, s, e, message):
-	return e == schnorr_calc(xG, s, e, message)
+def schnorr_verify(xG, s, e, message, point=None):
+	return e == schnorr_calc(xG, s, e, message, point)
 
 
 if __name__ == "__main__":
